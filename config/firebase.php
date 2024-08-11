@@ -106,7 +106,7 @@ return [
                  * https://my-project-id.firebaseio.com
                  */
 
-                 'url' => env('FIREBASE_DATABASE_URL', 'https://laravel-blog-fdc7a.firebaseio.com'),
+                'url' => env('FIREBASE_DATABASE_URL', 'https://laravel-blog-fdc7a.firebaseio.com'),
 
                 /*
                  * As a best practice, a service should have access to only the resources it needs.
@@ -154,7 +154,7 @@ return [
                  * override it here.
                  */
 
-                 'default_bucket' => env('FIREBASE_STORAGE_BUCKET', 'laravel-blog-fdc7a.appspot.com'),
+                'default_bucket' => env('FIREBASE_STORAGE_BUCKET', 'laravel-blog-fdc7a.appspot.com'),
             ],
 
             /*

@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use App\Models\User;
 use Closure;
+use Exception;
 use Kreait\Firebase\Contract\Auth as FirebaseAuth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -40,7 +41,7 @@ class FirebaseAuthMiddleware
             $firebaseUid = $verifiedIdToken->claims()->get('sub');
 
             $request->attributes->add(['firebase_user_id' => $firebaseUid]);
-        } catch (InvalidCustomToken | RevokedIdToken $e) {
+        } catch (InvalidCustomToken | RevokedIdToken | Exception $e) {
             return response()->json(['error' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
         }
 

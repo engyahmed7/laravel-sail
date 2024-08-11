@@ -49,7 +49,7 @@ class User extends Authenticatable implements JWTSubject
         'password' => 'hashed',
     ];
 
-    
+
     public function getJWTIdentifier()
     {
         return $this->getKey();
@@ -69,7 +69,8 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(Post::class);
     }
 
-    public function videos(){
+    public function videos()
+    {
         return $this->hasMany(Video::class);
     }
 
@@ -84,5 +85,4 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->fcm_token;
     }
-
 }

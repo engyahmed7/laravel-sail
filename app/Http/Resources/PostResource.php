@@ -19,7 +19,7 @@ class PostResource extends JsonResource
             'title' => $this->title ?? null,
             'content' => $this->content ?? null,
             'categories' => [
-                'id'=>$this->categories->pluck('id') ?? null,
+                'id' => $this->categories->pluck('id') ?? null,
                 'name' => $this->categories->pluck('name')  ?? null,
             ],
             'user' => $this->user->name ?? null,

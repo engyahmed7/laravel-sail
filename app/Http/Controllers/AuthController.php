@@ -45,7 +45,7 @@ use Kreait\Firebase\Factory;
  *         scheme="bearer",
  *         bearerFormat="JWT",
  *         in="header"
-*     )
+ *     )
  * 
  * 
  */
@@ -233,15 +233,15 @@ class AuthController extends Controller
     //     //     return $this->errorResponse('An error occurred during registration'.$e->getMessage(), 500);
     //     // }
     // } 
-    
 
 
-    
+
+
     public function register(RegisterationRequest $request)
     {
         // using firebase
 
-         // $newPostKey = $this->database->getReference('users')->push($request->validated());
+        // $newPostKey = $this->database->getReference('users')->push($request->validated());
         // return response()->json(['id' => $newPostKey->getKey()]);
 
         $createdUser = $this->auth->createUserWithEmailAndPassword($request->email, $request->password);
@@ -251,7 +251,7 @@ class AuthController extends Controller
         return $this->errorResponse('An error occurred during registration', 500);
     }
 
-    
+
     // /**
     //  * @group User Management
     //  *
@@ -371,7 +371,7 @@ class AuthController extends Controller
      *        )
      *    )
      * )
-     */  
+     */
     public function login(LoginRequest $request)
     {
         // using firebase
@@ -390,8 +390,6 @@ class AuthController extends Controller
         } catch (FailedToSignIn $e) {
             return response()->json(['message' => 'Failed to sign in: ' . $e->getMessage()], 500);
         }
-
-        
     }
 
     public function logout(Request $request)

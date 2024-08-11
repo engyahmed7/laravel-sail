@@ -38,15 +38,15 @@ class PostController extends Controller
      *         @OA\Schema(type="integer", example=1)
      *     ),
      * @OA\Parameter(
- *         name="Accept-Language",
- *         in="header",
- *         required=false,
- *         description="Specify the language for the response (e.g., 'ar' for Arabic, 'en' for English)",
- *         @OA\Schema(
- *             type="string",
- *             example="ar"
- *         )
- *     ),
+     *         name="Accept-Language",
+     *         in="header",
+     *         required=false,
+     *         description="Specify the language for the response (e.g., 'ar' for Arabic, 'en' for English)",
+     *         @OA\Schema(
+     *             type="string",
+     *             example="ar"
+     *         )
+     *     ),
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation",
@@ -57,8 +57,8 @@ class PostController extends Controller
      *     )
      * )
      */
-    
-     public function index()
+
+    public function index()
     {
         // $posts = Post::orderBy("created_at", "desc")
         //              ->with(["categories", "comments"])
@@ -195,11 +195,11 @@ class PostController extends Controller
         $data['user_id'] = auth()->user()->id;
 
         $newPostKey = $this->database->getReference('posts')->push($data);
-        return $this->successResponse(PostResource::collection($newPostKey), __('messages.post_created_successfully'),201);
+        return $this->successResponse(PostResource::collection($newPostKey), __('messages.post_created_successfully'), 201);
     }
 
 
-    
+
     // /**
     //  * @group Post Management
     //  *
@@ -368,7 +368,7 @@ class PostController extends Controller
         return $this->successResponse(new PostResource($post), __('messages.post_updated_successfully'));
     }
 
-    
+
     // /**
     //  * @group Post Management
     //  *
@@ -465,7 +465,7 @@ class PostController extends Controller
         // // ];
         // return $this->successResponse(new PostResource($post), 'Post deleted successfully');
 
-        $postKey = $this->database->getReference('posts/'.$id)->remove();
+        $postKey = $this->database->getReference('posts/' . $id)->remove();
         return $this->successResponse(['id' => $postKey->getKey()], __('messages.post_deleted_successfully'));
     }
 }

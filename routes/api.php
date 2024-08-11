@@ -31,7 +31,6 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/user-profile', function (Request $request) {
         return response()->json($request->user());
     });
-    
 });
 
 // auth routes
@@ -44,7 +43,7 @@ Route::middleware('auth:api')->group(function () {
 // Sanctum auth routes
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
-Route::post('logout', [AuthController::class,'logout'])->middleware('auth:sanctum');                      //check if there is token in db for that user
+Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');                      //check if there is token in db for that user
 
 Route::middleware(['auth:sanctum', 'ability:' . TokenAbility::ISSUE_ACCESS_TOKEN->value])->group(function () {
     Route::get('/refresh-token', [AuthController::class, 'refreshToken']);
@@ -55,7 +54,7 @@ Route::post('password/reset', [AuthController::class, 'resetPassword'])->name('p
 
 
 // posts routes
-Route::middleware(['firebase.auth','locale'])->group(function () {
+Route::middleware(['firebase.auth', 'locale'])->group(function () {
     // Route::post('logout', [AuthController::class, 'logout']);
     Route::resource('posts', PostController::class);
     Route::resource('categories', CategoryController::class);
