@@ -1,0 +1,446 @@
+openapi: 3.0.3
+info:
+  title: Laravel
+  description: ''
+  version: 1.0.0
+servers:
+  -
+    url: 'http://localhost'
+paths:
+  /api/logout:
+    post:
+      summary: ''
+      operationId: postApiLogout
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  '/api/posts/{id}':
+    put:
+      summary: ''
+      operationId: putApiPostsId
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: 'Must not be greater than 20 characters.'
+                  example: pqgcawf
+                content:
+                  type: string
+                  description: ''
+                  example: delectus
+              required:
+                - title
+                - content
+      security: []
+    get:
+      summary: 'Get the details of a specific post.'
+      operationId: getTheDetailsOfASpecificPost
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    id: 1
+                    title: 'My First Post'
+                    content: 'This is the content of my first post.'
+                    user_id: 1
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      title:
+                        type: string
+                        example: 'My First Post'
+                      content:
+                        type: string
+                        example: 'This is the content of my first post.'
+                      user_id:
+                        type: integer
+                        example: 1
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: 'Post not found'
+                properties:
+                  error:
+                    type: string
+                    example: 'Post not found'
+      tags:
+        - 'Post Management'
+    delete:
+      summary: 'Delete a specific post.'
+      operationId: deleteASpecificPost
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Post deleted successfully'
+                  data:
+                    id: 1
+                    title: 'My First Post'
+                    content: 'This is the content of my first post.'
+                    user_id: 1
+                properties:
+                  message:
+                    type: string
+                    example: 'Post deleted successfully'
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      title:
+                        type: string
+                        example: 'My First Post'
+                      content:
+                        type: string
+                        example: 'This is the content of my first post.'
+                      user_id:
+                        type: integer
+                        example: 1
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: 'Post not found'
+                properties:
+                  error:
+                    type: string
+                    example: 'Post not found'
+      tags:
+        - 'Post Management'
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the post.'
+        example: ipsum
+        required: true
+        schema:
+          type: string
+  /api/categories:
+    post:
+      summary: 'Store a newly created resource in storage.'
+      operationId: storeANewlyCreatedResourceInStorage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  '/api/categories/{id}':
+    put:
+      summary: 'Update the specified resource in storage.'
+      operationId: updateTheSpecifiedResourceInStorage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    delete:
+      summary: 'Remove the specified resource from storage.'
+      operationId: removeTheSpecifiedResourceFromStorage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the category.'
+        example: a
+        required: true
+        schema:
+          type: string
+  /api/posts:
+    post:
+      summary: 'Create a new post.'
+      operationId: createANewPost
+      description: ''
+      parameters: []
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    id: 1
+                    title: 'My First Post'
+                    content: 'This is the content of my first post.'
+                    user_id: 1
+                  message: 'Post created successfully'
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      title:
+                        type: string
+                        example: 'My First Post'
+                      content:
+                        type: string
+                        example: 'This is the content of my first post.'
+                      user_id:
+                        type: integer
+                        example: 1
+                  message:
+                    type: string
+                    example: 'Post created successfully'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: Unauthorized
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized
+      tags:
+        - 'Post Management'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: 'The title of the post.'
+                  example: 'My First Post'
+                content:
+                  type: string
+                  description: 'The content of the post.'
+                  example: 'This is the content of my first post.'
+              required:
+                - title
+                - content
+  /api/register:
+    post:
+      summary: 'Register a new user and return access and refresh tokens.'
+      operationId: registerANewUserAndReturnAccessAndRefreshTokens
+      description: ''
+      parameters: []
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    id: 1
+                    name: 'John Doe'
+                    email: john.doe@example.com
+                    accessToken: string
+                    refreshToken: string
+                  message: 'User registered successfully'
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: 'John Doe'
+                      email:
+                        type: string
+                        example: john.doe@example.com
+                      accessToken:
+                        type: string
+                        example: string
+                      refreshToken:
+                        type: string
+                        example: string
+                  message:
+                    type: string
+                    example: 'User registered successfully'
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: 'An error occurred during registration: [error_message]'
+                properties:
+                  error:
+                    type: string
+                    example: 'An error occurred during registration: [error_message]'
+      tags:
+        - 'User Management'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'The name of the user.'
+                  example: 'John Doe'
+                email:
+                  type: string
+                  description: 'The email address of the user.'
+                  example: john.doe@example.com
+                password:
+                  type: string
+                  description: 'The password for the user.'
+                  example: secretpassword
+                password_confirmation:
+                  type: string
+                  description: 'The confirmation of the password.'
+                  example: secretpassword
+              required:
+                - name
+                - email
+                - password
+                - password_confirmation
+      security: []
+  /api/login:
+    post:
+      summary: 'Log in a user and return access and refresh tokens.'
+      operationId: logInAUserAndReturnAccessAndRefreshTokens
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    id: 1
+                    name: 'John Doe'
+                    email: john.doe@example.com
+                    accessToken: string
+                    refreshToken: string
+                  message: 'User logged in successfully'
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: 'John Doe'
+                      email:
+                        type: string
+                        example: john.doe@example.com
+                      accessToken:
+                        type: string
+                        example: string
+                      refreshToken:
+                        type: string
+                        example: string
+                  message:
+                    type: string
+                    example: 'User logged in successfully'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: Unauthorized
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized
+      tags:
+        - 'User Management'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 'The email address of the user.'
+                  example: john.doe@example.com
+                password:
+                  type: string
+                  description: 'The password for the user.'
+                  example: secretpassword
+              required:
+                - email
+                - password
+      security: []
+tags:
+  -
+    name: Endpoints
+    description: ''
+  -
+    name: 'Post Management'
+    description: ''
+  -
+    name: 'User Management'
+    description: ''
+components:
+  securitySchemes:
+    default:
+      type: http
+      scheme: bearer
+      description: 'You can retrieve your token by visiting your dashboard and clicking <b>Generate API token</b>.'
+security:
+  -
+    default: []

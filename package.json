@@ -1,0 +1,19 @@
+{
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build"
+    },
+    "devDependencies": {
+        "axios": "^1.6.4",
+        "laravel-vite-plugin": "^1.0.0",
+        "prettier": "^3.3.3",
+        "prettier-plugin-blade": "^2.1.16",
+        "prettier-plugin-tailwindcss": "^0.6.5",
+        "vite": "^5.0.0"
+    },
+    "dependencies": {
+        "swagger-ui-dist": "^5.17.14"
+    }
+}

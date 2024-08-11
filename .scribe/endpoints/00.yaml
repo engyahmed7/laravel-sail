@@ -1,0 +1,209 @@
+name: 'User Management'
+description: ''
+endpoints:
+  -
+    httpMethods:
+      - POST
+    uri: api/register
+    metadata:
+      groupName: 'User Management'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Register a new user and return access and refresh tokens.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        name: name
+        description: 'The name of the user.'
+        required: true
+        example: 'John Doe'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        custom: []
+      email:
+        name: email
+        description: 'The email address of the user.'
+        required: true
+        example: john.doe@example.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        custom: []
+      password:
+        name: password
+        description: 'The password for the user.'
+        required: true
+        example: secretpassword
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        custom: []
+      password_confirmation:
+        name: password_confirmation
+        description: 'The confirmation of the password.'
+        required: true
+        example: secretpassword
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        custom: []
+    cleanBodyParameters:
+      name: 'John Doe'
+      email: john.doe@example.com
+      password: secretpassword
+      password_confirmation: secretpassword
+    fileParameters: []
+    responses:
+      -
+        status: 201
+        content: |-
+          {
+            "data": {
+              "id": 1,
+              "name": "John Doe",
+              "email": "john.doe@example.com",
+              "accessToken": "string",
+              "refreshToken": "string"
+            },
+            "message": "User registered successfully"
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 500
+        content: |-
+          {
+            "error": "An error occurred during registration: [error_message]"
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields:
+      $.data.accessToken:
+        name: $.data.accessToken
+        description: 'The access token for the user.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      $.data.refreshToken:
+        name: $.data.refreshToken
+        description: 'The refresh token for the user.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - POST
+    uri: api/login
+    metadata:
+      groupName: 'User Management'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Log in a user and return access and refresh tokens.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      email:
+        name: email
+        description: 'The email address of the user.'
+        required: true
+        example: john.doe@example.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        custom: []
+      password:
+        name: password
+        description: 'The password for the user.'
+        required: true
+        example: secretpassword
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        custom: []
+    cleanBodyParameters:
+      email: john.doe@example.com
+      password: secretpassword
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+            "data": {
+              "id": 1,
+              "name": "John Doe",
+              "email": "john.doe@example.com",
+              "accessToken": "string",
+              "refreshToken": "string"
+            },
+            "message": "User logged in successfully"
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 401
+        content: |-
+          {
+            "error": "Unauthorized"
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields:
+      $.data.accessToken:
+        name: $.data.accessToken
+        description: 'The access token for the user.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      $.data.refreshToken:
+        name: $.data.refreshToken
+        description: 'The refresh token for the user.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
