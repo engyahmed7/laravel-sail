@@ -55,7 +55,7 @@ Route::post('password/reset', [AuthController::class, 'resetPassword'])->name('p
 
 
 // posts routes
-Route::middleware(['auth.custom','locale'])->group(function () {
+Route::middleware(['firebase.auth','locale'])->group(function () {
     // Route::post('logout', [AuthController::class, 'logout']);
     Route::resource('posts', PostController::class);
     Route::resource('categories', CategoryController::class);

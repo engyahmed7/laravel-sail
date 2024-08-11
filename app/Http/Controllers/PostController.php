@@ -199,6 +199,34 @@ class PostController extends Controller
     }
 
 
+    
+    // /**
+    //  * @group Post Management
+    //  *
+    //  * Get the details of a specific post.
+    //  *
+    //  * @authenticated
+    //  *
+    //  * @urlParam id string required The ID of the post. Example: 1
+    //  *
+    //  * @response 200 {
+    //  *   "data": {
+    //  *     "id": 1,
+    //  *     "title": "My First Post",
+    //  *     "content": "This is the content of my first post.",
+    //  *     "user_id": 1
+    //  *   }
+    //  * }
+    //  *
+    //  * @response 404 {
+    //  *   "error": "Post not found"
+    //  * }
+    //  *
+    //  * @responseField $.data.id integer The ID of the post.
+    //  * @responseField $.data.title string The title of the post.
+    //  * @responseField $.data.content string The content of the post.
+    //  * @responseField $.data.user_id integer The ID of the user who created the post.
+    //  */
     /**
      * @OA\Get(
      *    path="/posts/{id}",
@@ -224,33 +252,6 @@ class PostController extends Controller
      * )
      */
 
-    /**
-     * @group Post Management
-     *
-     * Get the details of a specific post.
-     *
-     * @authenticated
-     *
-     * @urlParam id string required The ID of the post. Example: 1
-     *
-     * @response 200 {
-     *   "data": {
-     *     "id": 1,
-     *     "title": "My First Post",
-     *     "content": "This is the content of my first post.",
-     *     "user_id": 1
-     *   }
-     * }
-     *
-     * @response 404 {
-     *   "error": "Post not found"
-     * }
-     *
-     * @responseField $.data.id integer The ID of the post.
-     * @responseField $.data.title string The title of the post.
-     * @responseField $.data.content string The content of the post.
-     * @responseField $.data.user_id integer The ID of the user who created the post.
-     */
     public function show(string $id)
     {
         $post = new PostResource(Post::find($id));
@@ -367,6 +368,37 @@ class PostController extends Controller
         return $this->successResponse(new PostResource($post), __('messages.post_updated_successfully'));
     }
 
+    
+    // /**
+    //  * @group Post Management
+    //  *
+    //  * Delete a specific post.
+    //  *
+    //  * @authenticated
+    //  *
+    //  * @urlParam id integer required The ID of the post to delete. Example: 1
+
+    //  *
+    //  * @response 200 {
+    //  *   "message": "Post deleted successfully",
+    //  *   "data": {
+    //  *     "id": 1,
+    //  *     "title": "My First Post",
+    //  *     "content": "This is the content of my first post.",
+    //  *     "user_id": 1
+    //  *   }
+    //  * }
+    //  *
+    //  * @response 404 {
+    //  *   "error": "Post not found"
+    //  * }
+    //  *
+    //  * @responseField $.message string A message indicating the result of the deletion.
+    //  * @responseField $.data.id integer The ID of the deleted post.
+    //  * @responseField $.data.title string The title of the deleted post.
+    //  * @responseField $.data.content string The content of the deleted post.
+    //  * @responseField $.data.user_id integer The ID of the user who created the deleted post.
+    //  */
     /**
      * @OA\Delete(
      *   path="/posts/{id}",
@@ -417,36 +449,6 @@ class PostController extends Controller
      * )
      * )
      * )
-     */
-    /**
-     * @group Post Management
-     *
-     * Delete a specific post.
-     *
-     * @authenticated
-     *
-     * @urlParam id integer required The ID of the post to delete. Example: 1
-
-     *
-     * @response 200 {
-     *   "message": "Post deleted successfully",
-     *   "data": {
-     *     "id": 1,
-     *     "title": "My First Post",
-     *     "content": "This is the content of my first post.",
-     *     "user_id": 1
-     *   }
-     * }
-     *
-     * @response 404 {
-     *   "error": "Post not found"
-     * }
-     *
-     * @responseField $.message string A message indicating the result of the deletion.
-     * @responseField $.data.id integer The ID of the deleted post.
-     * @responseField $.data.title string The title of the deleted post.
-     * @responseField $.data.content string The content of the deleted post.
-     * @responseField $.data.user_id integer The ID of the user who created the deleted post.
      */
     public function destroy(string $id)
     {

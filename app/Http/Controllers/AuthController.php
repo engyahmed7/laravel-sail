@@ -251,11 +251,50 @@ class AuthController extends Controller
         return $this->errorResponse('An error occurred during registration', 500);
     }
 
+    
+    // /**
+    //  * @group User Management
+    //  *
+    //  * Log in a user and return access and refresh tokens.
+    //  *
+    //  * @bodyParam email string required The email address of the user. Example: john.doe@example.com
+    //  * @bodyParam password string required The password for the user. Example: secretpassword
+    //  *
+    //  * @response 200 {
+    //  *   "data": {
+    //  *     "id": 1,
+    //  *     "name": "John Doe",
+    //  *     "email": "john.doe@example.com",
+    //  *     "accessToken": "string",
+    //  *     "refreshToken": "string"
+    //  *   },
+    //  *   "message": "User logged in successfully"
+    //  * }
+    //  * @response 401 {
+    //  *   "error": "Unauthorized"
+    //  * }
+    //  *
+    //  * @responseField $.data.accessToken string The access token for the user.
+    //  * @responseField $.data.refreshToken string The refresh token for the user.
+    //  */
+    // public function login(LoginRequest $request)
+    // {
+    //     //sanctum
+    //     // $credentials = $request->validated();
+    //     // // if(!Auth::attempt($credentials)){
+    //     // //     return $this->errorResponse('Unauthorized', 401);
+    //     // // }
+    //     // $user = User::where('email', $credentials['email'])->first();
+    //     // if (!$user || !Hash::check($credentials['password'], $user->password)) {
+    //     //     return $this->errorResponse('Invalid email or password.', 404);
+    //     // }
+    //     // $accessToken = $user->createToken('access_token', [TokenAbility::ACCESS_API->value], Carbon::now()->addMinutes(config('sanctum.ac_expiration')));
+    //     // $refreshToken = $user->createToken('refresh_token', [TokenAbility::ISSUE_ACCESS_TOKEN->value], Carbon::now()->addMinutes(config('sanctum.rt_expiration')));
 
-
-
-
-
+    //     // $user->accesToken = $accessToken;
+    //     // $user->refreshToken = $refreshToken;
+    //     // return $this->successResponse($user, 'User logged in successfully', 200);
+    // } 
 
     /**
      * @OA\Post(
@@ -332,52 +371,7 @@ class AuthController extends Controller
      *        )
      *    )
      * )
-     */
-    /**
-     * @group User Management
-     *
-     * Log in a user and return access and refresh tokens.
-     *
-     * @bodyParam email string required The email address of the user. Example: john.doe@example.com
-     * @bodyParam password string required The password for the user. Example: secretpassword
-     *
-     * @response 200 {
-     *   "data": {
-     *     "id": 1,
-     *     "name": "John Doe",
-     *     "email": "john.doe@example.com",
-     *     "accessToken": "string",
-     *     "refreshToken": "string"
-     *   },
-     *   "message": "User logged in successfully"
-     * }
-     * @response 401 {
-     *   "error": "Unauthorized"
-     * }
-     *
-     * @responseField $.data.accessToken string The access token for the user.
-     * @responseField $.data.refreshToken string The refresh token for the user.
-     */
-    // public function login(LoginRequest $request)
-    // {
-    //     //sanctum
-    //     // $credentials = $request->validated();
-    //     // // if(!Auth::attempt($credentials)){
-    //     // //     return $this->errorResponse('Unauthorized', 401);
-    //     // // }
-    //     // $user = User::where('email', $credentials['email'])->first();
-    //     // if (!$user || !Hash::check($credentials['password'], $user->password)) {
-    //     //     return $this->errorResponse('Invalid email or password.', 404);
-    //     // }
-    //     // $accessToken = $user->createToken('access_token', [TokenAbility::ACCESS_API->value], Carbon::now()->addMinutes(config('sanctum.ac_expiration')));
-    //     // $refreshToken = $user->createToken('refresh_token', [TokenAbility::ISSUE_ACCESS_TOKEN->value], Carbon::now()->addMinutes(config('sanctum.rt_expiration')));
-
-    //     // $user->accesToken = $accessToken;
-    //     // $user->refreshToken = $refreshToken;
-    //     // return $this->successResponse($user, 'User logged in successfully', 200);
-    // } 
-
-        
+     */  
     public function login(LoginRequest $request)
     {
         // using firebase
@@ -399,9 +393,6 @@ class AuthController extends Controller
 
         
     }
-
-
-
 
     public function logout(Request $request)
     {

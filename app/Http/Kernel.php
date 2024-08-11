@@ -70,5 +70,6 @@ class Kernel extends HttpKernel
         'abilities' => \Laravel\Sanctum\Http\Middleware\CheckAbilities::class,
         'ability' => \Laravel\Sanctum\Http\Middleware\CheckForAnyAbility::class,
         'locale' => \App\Http\Middleware\LocaleMiddleware::class,
+        'firebase.auth' => \App\Http\Middleware\FirebaseAuthMiddleware::class,
     ];
 }
