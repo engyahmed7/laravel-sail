@@ -376,14 +376,14 @@ class AuthController extends Controller
     {
         // using firebase
 
-        $absolutePath = base_path('config/firebase-credentials.json');
-        $factory = (new Factory)->withServiceAccount($absolutePath);
-        $auth = $factory->createAuth();
+        // $absolutePath = base_path('config/firebase-credentials.json');
+        // $factory = (new Factory)->withServiceAccount($absolutePath);
+        // $auth = $factory->createAuth();
 
         try {
             $email = $request->email;
             $password = $request->password;
-            $user = $auth->signInWithEmailAndPassword($email, $password);
+            $user = $this->auth->signInWithEmailAndPassword($email, $password);
             return response()->json(['message' => 'User logged in successfully', 'data' => $user->data()]);
         } catch (InvalidPassword $e) {
             return response()->json(['message' => 'Invalid password'], 400);
