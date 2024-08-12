@@ -19,5 +19,5 @@ yarn-error.log
 node_modules/
 .prettierrc
 /vendor
-
+/vendor/*
 /config/firebase-credentials.json

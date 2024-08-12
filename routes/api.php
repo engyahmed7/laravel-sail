@@ -3,6 +3,7 @@
 use App\Enums\TokenAbility;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\FirebaseController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\NotificationController;
@@ -58,7 +59,10 @@ Route::middleware(['firebase.auth', 'locale'])->group(function () {
     // Route::post('logout', [AuthController::class, 'logout']);
     Route::resource('posts', PostController::class);
     Route::resource('categories', CategoryController::class);
+
 });
+Route::get('/getMessages', [ChatController::class, 'getMessages']);
+Route::post('/sendMessage', [ChatController::class, 'sendMessage']);
 
 
 // Route::post('/posts', [PostController::class, 'store']);
@@ -75,10 +79,7 @@ Route::middleware(['firebase.auth', 'locale'])->group(function () {
 Route::post('/firebase/user', [FirebaseController::class, 'createUser']);
 Route::post('/firebase/login', [FirebaseController::class, 'loginUser']);
 
-// routes/web.php
-
-Route::post('/send-notification', [NotificationController::class, 'send']);
-Route::post('/save-token', [NotificationController::class, 'saveToken']);
-
-
 Route::get('/send-web-notification', [sendNotification::class, 'sendWebNotification'])->name('send.web-notification');
+
+// lara Notification
+Route::get('/send-notification', [NotificationController::class, 'sendNotification']);
