@@ -21,8 +21,11 @@ use PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException;
 use Kreait\Firebase\Auth as FirebaseAuth;
 use Kreait\Firebase\Contract\Auth as ContractAuth;
 use Kreait\Firebase\Exception\Auth\InvalidPassword;
+use Kreait\Firebase\Exception\AuthException;
 use Kreait\Firebase\Factory;
-
+use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 // use Kreait\Firebase\Auth;
 /**
@@ -55,11 +58,13 @@ class AuthController extends Controller
 
     protected $database;
     protected $auth;
+    protected $apiKey;
 
     public function __construct(Database $database)
     {
         $this->database = $database;
         $this->auth = Firebase::auth();
+        $this->apiKey = config('services.firebase.api_key');
     }
 
 
@@ -252,6 +257,8 @@ class AuthController extends Controller
     }
 
 
+
+
     // /**
     //  * @group User Management
     //  *
@@ -384,11 +391,12 @@ class AuthController extends Controller
             $email = $request->email;
             $password = $request->password;
             $user = $this->auth->signInWithEmailAndPassword($email, $password);
-            return response()->json(['message' => 'User logged in successfully', 'data' => $user->data()]);
+            // return response()->json(['message' => 'User logged in successfully', 'data' => $user->data()]);
+            return $this->successResponse(['data' => $user->data()], 'User logged in successfully', 200);
         } catch (InvalidPassword $e) {
-            return response()->json(['message' => 'Invalid password'], 400);
+            return $this->errorResponse('Invalid email or password', 401);
         } catch (FailedToSignIn $e) {
-            return response()->json(['message' => 'Failed to sign in: ' . $e->getMessage()], 500);
+            return $this->errorResponse('Failed to sign in: ' . $e->getMessage(), 500);
         }
     }
 
@@ -406,7 +414,128 @@ class AuthController extends Controller
         $accessToken = $request->user()->createToken('access_token', [TokenAbility::ACCESS_API->value], Carbon::now()->addMinutes(config('sanctum.ac_expiration')))->plainTextToken;
         return $this->successResponse(['access_token' => $accessToken], 'Token refreshed successfully', 200);
     }
+
+
+
+
+    // public function signInWithGoogle(Request $request)
+    // {
+    //     $token = $request->input('token');
+
+    //     try {
+    //         $verifiedIdToken = $this->auth->verifyIdToken($token);
+    //         $uid = $verifiedIdToken->claims()->get('sub');
+
+    //         $user = User::where('id', $uid)->first();
+
+    //         if (!$user) {
+    //             $user = User::create([
+    //                 'name' => $verifiedIdToken->claims()->get('name'),
+    //                 'email' => $verifiedIdToken->claims()->get('email'),
+    //             ]);
+    //         }
+
+    //         Auth::login($user);
+
+    //         return response()->json(['message' => 'User authenticated successfully.']);
+    //     } catch (Exception $e) {
+    //         return response()->json(['error' => $e->getMessage()], 400);
+    //     }
+    // }
+
+    public function signInWithGoogle(Request $request)
+    {
+        $token = $request->input('token');
+
+        try {
+            $url = "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=" . $this->apiKey;
+
+            $response = Http::post($url, [
+                'idToken' => $token,
+            ]);
+
+            if ($response->successful()) {
+                $resArr = $response->json();
+
+                if ($resArr['users']->isNotEmpty()) {
+                    $userFromFirebase = $resArr['users'][0];
+                    $id = $userFromFirebase['localId'];
+
+                    $user = User::where('id', $id)->first();
+
+                    if (!$user) {
+                        $user = User::create([
+                            'name' => $userFromFirebase['displayName'],
+                            'email' => $userFromFirebase['email'],
+                            'password' => 'engy',
+                        ]);
+                    } else {
+                        return response()->json(['message' => 'User authenticated successfully.']);
+                    }
+
+                    Auth::login($user);
+
+                    return response()->json(['message' => 'User authenticated successfully.']);
+                } else {
+                    return response()->json(['error' => 'User not found.'], 404);
+                }
+            } else {
+                Log::error('Firebase Authentication Error', [
+                    'response' => $response->json(),
+                    'status' => $response->status()
+                ]);
+
+                return response()->json(['error' => 'Failed to authenticate with Firebase.'], 400);
+            }
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 400);
+        }
+    }
+
+    
+    public function sendVerificationCode(Request $request)
+    {
+        $phoneNumber = $request->input('phoneNumber');
+        $recaptchaToken = $request->input('recaptchaToken');
+        
+        try {
+            $response = Http::post("https://identitytoolkit.googleapis.com/v1/accounts:sendVerificationCode?key={$this->apiKey}", [
+                'phoneNumber' => $phoneNumber,
+                'recaptchaToken' => $recaptchaToken
+            ]);
+
+            if ($response->successful()) {
+                return response()->json($response->json());
+            } else {
+                Log::error('Firebase Send Verification Code Error', ['response' => $response->json()]);
+                return response()->json(['error' => 'Failed to send verification code.'], 400);
+            }
+        } catch (Exception $e) {
+            Log::error('Exception', ['error' => $e->getMessage()]);
+            return response()->json(['error' => 'An error occurred.'], 500);
+        }
+    }
+
+    public function verifyCode(Request $request)
+    {
+        $sessionInfo = $request->input('sessionInfo');
+        $code = $request->input('code');
+        
+        try {
+            $response = Http::post("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPhoneNumber?key={$this->apiKey}", [
+                'sessionInfo' => $sessionInfo,
+                'code' => $code
+            ]);
+
+            if ($response->successful()) {
+                return response()->json($response->json());
+            } else {
+                Log::error('Firebase Verify Code Error', ['response' => $response->json()]);
+                return response()->json(['error' => 'Failed to verify code.'], 400);
+            }
+        } catch (Exception $e) {
+            Log::error('Exception', ['error' => $e->getMessage()]);
+            return response()->json(['error' => 'An error occurred.'], 500);
+        }
+    }
 }
-
-
-//http://localhost/api/documentation

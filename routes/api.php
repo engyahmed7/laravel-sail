@@ -10,6 +10,8 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\sendNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Http;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -83,3 +85,12 @@ Route::get('/send-web-notification', [sendNotification::class, 'sendWebNotificat
 
 // lara Notification
 Route::get('/send-notification', [NotificationController::class, 'sendNotification']);
+
+
+
+// google Auth
+Route::post('/auth/google', [AuthController::class, 'signInWithGoogle']);
+
+// phone auth
+Route::post('/auth/send-code', [AuthController::class, 'sendVerificationCode']);
+Route::post('/auth/verify-code', [AuthController::class, 'verifyCode']);
