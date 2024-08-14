@@ -492,12 +492,29 @@ class AuthController extends Controller
         }
     }
 
-    
+
     public function sendVerificationCode(Request $request)
     {
         $phoneNumber = $request->input('phoneNumber');
         $recaptchaToken = $request->input('recaptchaToken');
-        
+
+        // to verify the reCAPTCHA token
+        $recaptchaSecret = '6LdZ_SQqAAAAAJBIvrmx0hd-SteMeqwMI1_afCcr';
+        $recaptchaResponse = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+            'secret' => $recaptchaSecret,
+            'response' => $recaptchaToken,
+        ]);
+
+        $recaptchaResult = $recaptchaResponse->json();
+
+        Log::info('reCAPTCHA validation result:', $recaptchaResult);
+
+
+        if (!$recaptchaResult['success'] || $recaptchaResult['score'] < 0.5) {
+            return response()->json(['error' => 'reCAPTCHA verification failed.'], 400)
+                ->header('Access-Control-Allow-Origin', '*');
+        }
+
         try {
             $response = Http::post("https://identitytoolkit.googleapis.com/v1/accounts:sendVerificationCode?key={$this->apiKey}", [
                 'phoneNumber' => $phoneNumber,
@@ -505,22 +522,27 @@ class AuthController extends Controller
             ]);
 
             if ($response->successful()) {
-                return response()->json($response->json());
+                return response()->json($response->json())
+                    ->header('Access-Control-Allow-Origin', '*');
             } else {
                 Log::error('Firebase Send Verification Code Error', ['response' => $response->json()]);
-                return response()->json(['error' => 'Failed to send verification code.'], 400);
+                return response()->json(['error' => 'Failed to send verification code.'], 400)
+                    ->header('Access-Control-Allow-Origin', '*');
             }
         } catch (Exception $e) {
             Log::error('Exception', ['error' => $e->getMessage()]);
-            return response()->json(['error' => 'An error occurred.'], 500);
+            return response()->json(['error' => 'An error occurred.'], 500)
+                ->header('Access-Control-Allow-Origin', '*');
         }
     }
+
+
 
     public function verifyCode(Request $request)
     {
         $sessionInfo = $request->input('sessionInfo');
         $code = $request->input('code');
-        
+
         try {
             $response = Http::post("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPhoneNumber?key={$this->apiKey}", [
                 'sessionInfo' => $sessionInfo,
