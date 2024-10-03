@@ -42,5 +42,7 @@ return [
         'redirect' => env('FACEBOOK_REDIRECT'),
     ],
 
-
+    'openai' => [
+        'api_key' => env('OPENAI_API_KEY'),
+    ],
 ];

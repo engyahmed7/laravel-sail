@@ -4,6 +4,7 @@ use App\Enums\TokenAbility;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\ChatGPTController;
 use App\Http\Controllers\FirebaseController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\NotificationController;
@@ -94,3 +95,6 @@ Route::post('/auth/google', [AuthController::class, 'signInWithGoogle']);
 // phone auth
 Route::post('/auth/send-code', [AuthController::class, 'sendVerificationCode']);
 Route::post('/auth/verify-code', [AuthController::class, 'verifyCode']);
+
+
+Route::post('/chat/generate', [ChatGPTController::class, 'generate']);
